@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using H.Core;
 using H.Core.Searchers;
 using HtmlAgilityPack;
 
@@ -13,7 +12,7 @@ namespace H.Searchers
     /// <summary>
     /// 
     /// </summary>
-    public class GoogleSearcher : Module, ISearcher
+    public class GoogleSearcher : Searcher
     {
         #region Properties
 
@@ -29,7 +28,7 @@ namespace H.Searchers
         /// <param name="query"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<ICollection<SearchResult>> SearchAsync(string query, CancellationToken cancellationToken = default)
+        public override async Task<ICollection<SearchResult>> SearchAsync(string query, CancellationToken cancellationToken = default)
         {
             var html = await GetHtmlAsync(query, cancellationToken).ConfigureAwait(false);
 
