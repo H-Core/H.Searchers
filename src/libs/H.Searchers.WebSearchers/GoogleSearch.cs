@@ -1,43 +1,81 @@
-﻿//using System.Collections.Generic;
-//using System.Threading.Tasks;
-//using H.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using H.Core;
+using H.Core.Searchers;
+using HtmlAgilityPack;
 
-//namespace H.Searchers
-//{
-//    /// <summary>
-//    /// 
-//    /// </summary>
-//    public class GoogleSearcher : Module, ISearcher
-//    {
-//        /// <summary>
-//        /// 
-//        /// </summary>
-//        /// <param name="query"></param>
-//        /// <returns></returns>
-//        public Task<List<string>> Search(string query)
-//        {
-//            /*
-//            using (var service = new CustomsearchService(
-//                new BaseClientService.Initializer
-//                {
-//                    ApiKey = GoogleSearchApiKey
-//                }))
-//            {
-//                var requests = service.Cse.List(query);
-//                requests.Cx = GoogleCx;
-//                requests.Num = MaxResults;
+namespace H.Searchers
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public class GoogleSearcher : Module, ISearcher
+    {
+        #region Properties
 
-//                var results = requests.Execute().Items;
-//                if (results == null)
-//                {
-//                    return new List<string>();
-//                }
+        private HttpClient HttpClient { get; } = new();
 
-//                return results.Select(i => i.Link).ToList();
-//            }
-//            */
+        #endregion
 
-//            return Task.FromResult(new List<string>());
-//        }
-//    }
-//}
+        #region Methods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<ICollection<SearchResult>> SearchAsync(string query, CancellationToken cancellationToken = default)
+        {
+            var html = await GetHtmlAsync(query, cancellationToken).ConfigureAwait(false);
+
+            var document = new HtmlDocument();
+            document.LoadHtml(html);
+
+            return document.DocumentNode
+                .SelectNodes("//a[@href]")
+                .Where(node => node.Attributes.Contains("ping") &&
+                               node.Attributes.Contains("data-ved"))
+                .Select(node => new SearchResult(
+                    node.Attributes["href"].Value, 
+                    node.Descendants("h3").FirstOrDefault()?.InnerText ?? string.Empty))
+                .ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<string> GetHtmlAsync(string query, CancellationToken cancellationToken = default)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, new Uri($"https://www.google.com/search?q={query}&oq={query}&sourceid=chrome&ie=UTF-8"))
+            {
+                Headers =
+                {
+                    { "user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" },
+                }
+            };
+            using var response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public override void Dispose()
+        {
+            HttpClient.Dispose();
+        }
+
+        #endregion
+    }
+}

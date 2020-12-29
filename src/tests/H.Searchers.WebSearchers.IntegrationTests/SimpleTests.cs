@@ -14,7 +14,7 @@ namespace H.Searchers.WebSearchers.IntegrationTests
             using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             var cancellationToken = cancellationTokenSource.Token;
 
-            using var searcher = new YandexSearcher();
+            using var searcher = new GoogleSearcher();
             var results = await searcher.SearchAsync("Hello, world!", cancellationToken);
 
             Console.WriteLine("Results:");

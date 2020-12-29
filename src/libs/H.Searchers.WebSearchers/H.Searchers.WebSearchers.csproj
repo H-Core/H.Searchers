@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet">
-    <Description>A simple library that provides Yandex search(In the future also Google).</Description>
+    <Description>A simple library that provides Yandex and Google search.</Description>
     <PackageTags>yandex, search</PackageTags>
   </PropertyGroup>
 

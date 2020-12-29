@@ -12,9 +12,10 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Nuget">
-    <Version>0.19.3</Version>
+    <Version>0.19.3.2</Version>
     <PackageReleaseNotes>
       To H.Core 0.19.3.
+      Added GoogleSearch.
     </PackageReleaseNotes>
     <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
