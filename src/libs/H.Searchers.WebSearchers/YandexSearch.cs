@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using H.Core;
+using H.Core.Searchers;
 using HtmlAgilityPack;
 
 namespace H.Searchers
@@ -16,19 +17,20 @@ namespace H.Searchers
         /// 
         /// </summary>
         /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<List<string>> Search(string query) => await Task.Run(() =>
+        public async Task<IEnumerable<SearchResult>> SearchAsync(string query, CancellationToken cancellationToken = default)
         {
             var url = $"https://www.yandex.ru/search/?text={query}";
-
             var web = new HtmlWeb();
-            var document = web.Load(new Uri(url));
+            var document = await web.LoadFromWebAsync(url, cancellationToken);
 
             return document.DocumentNode
                 .SelectNodes("//a[@href]")
                 .Where(i => i.Attributes.Contains("tabindex") && i.Attributes["tabindex"].Value == "2")
                 .Select(i => i.Attributes["href"].Value)
+                .Select(i => new SearchResult(i, string.Empty))
                 .ToList();
-        }).ConfigureAwait(false);
+        }
     }
 }

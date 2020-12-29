@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "H.Searchers.WebSearchers", "src\libs\H.Searchers.WebSearchers\H.Searchers.WebSearchers.csproj", "{60D18BB8-4D3F-4FE9-90C1-F61030C1C077}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "H.Searchers.WebSearchers.IntegrationTests", "src\tests\H.Searchers.WebSearchers.IntegrationTests\H.Searchers.WebSearchers.IntegrationTests.csproj", "{E29AE0C3-A47B-4F8E-9DA4-1C6BED5AC1D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,12 +35,17 @@ Global
 		{60D18BB8-4D3F-4FE9-90C1-F61030C1C077}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60D18BB8-4D3F-4FE9-90C1-F61030C1C077}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60D18BB8-4D3F-4FE9-90C1-F61030C1C077}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E29AE0C3-A47B-4F8E-9DA4-1C6BED5AC1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E29AE0C3-A47B-4F8E-9DA4-1C6BED5AC1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E29AE0C3-A47B-4F8E-9DA4-1C6BED5AC1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E29AE0C3-A47B-4F8E-9DA4-1C6BED5AC1D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{60D18BB8-4D3F-4FE9-90C1-F61030C1C077} = {6E5BF389-3D3F-4D74-9DD0-3B199CB529C5}
+		{E29AE0C3-A47B-4F8E-9DA4-1C6BED5AC1D2} = {9CAA231D-7BE1-46C9-ACD6-EB2E569CEBEA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1493AEE4-9211-46E9-BFE6-8F629EAC5693}
