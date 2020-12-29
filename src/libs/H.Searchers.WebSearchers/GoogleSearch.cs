@@ -12,7 +12,7 @@ namespace H.Searchers
     /// <summary>
     /// 
     /// </summary>
-    public class GoogleSearcher : Searcher
+    public sealed class GoogleSearcher : Searcher
     {
         #region Properties
 
@@ -73,6 +73,8 @@ namespace H.Searchers
         public override void Dispose()
         {
             HttpClient.Dispose();
+
+            base.Dispose();
         }
 
         #endregion

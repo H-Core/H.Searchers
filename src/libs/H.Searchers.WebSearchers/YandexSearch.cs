@@ -12,7 +12,7 @@ namespace H.Searchers
     /// <summary>
     /// 
     /// </summary>
-    public class YandexSearcher : Searcher
+    public sealed class YandexSearcher : Searcher
     {
         #region Properties
 
@@ -77,6 +77,8 @@ namespace H.Searchers
         public override void Dispose()
         {
             HttpClient.Dispose();
+
+            base.Dispose();
         }
 
         #endregion
