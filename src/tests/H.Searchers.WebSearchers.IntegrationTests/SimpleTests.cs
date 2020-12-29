@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,7 +15,7 @@ namespace H.Searchers.WebSearchers.IntegrationTests
             var cancellationToken = cancellationTokenSource.Token;
 
             using var searcher = new YandexSearcher();
-            var results = (await searcher.SearchAsync("Hello, world!", cancellationToken)).ToArray();
+            var results = await searcher.SearchAsync("Hello, world!", cancellationToken);
 
             Console.WriteLine("Results:");
             foreach (var result in results)
@@ -24,7 +23,7 @@ namespace H.Searchers.WebSearchers.IntegrationTests
                 Console.WriteLine($" - {result.Url} {result.Description}");
             }
 
-            Assert.AreNotEqual(0, results.Length, nameof(results.Length));
+            Assert.AreNotEqual(0, results.Count, nameof(results.Count));
         }
     }
 }

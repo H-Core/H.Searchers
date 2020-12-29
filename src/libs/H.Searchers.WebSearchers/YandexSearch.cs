@@ -19,7 +19,7 @@ namespace H.Searchers
         /// <param name="query"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<SearchResult>> SearchAsync(string query, CancellationToken cancellationToken = default)
+        public async Task<ICollection<SearchResult>> SearchAsync(string query, CancellationToken cancellationToken = default)
         {
             var url = $"https://www.yandex.ru/search/?text={query}";
             var web = new HtmlWeb();
