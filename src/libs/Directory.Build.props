@@ -2,8 +2,13 @@
 
   <Import Project="..\Directory.Build.props" />
 
-  <PropertyGroup Label="Release">
+  <PropertyGroup Label="Common">
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Plugins">
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <!--<EnableDynamicLoading>true</EnableDynamicLoading>-->
   </PropertyGroup>
 
   <PropertyGroup Label="Signing">
@@ -11,10 +16,14 @@
     <AssemblyOriginatorKeyFile>$(SolutionDir)\src\key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
+  <ItemGroup Label="CLSCompliant">
+    <Compile Include="$(SolutionDir)src\CLSCompliantTrue.cs" />
+  </ItemGroup>
+
   <PropertyGroup Label="Nuget">
-    <Version>0.19.6</Version>
+    <Version>0.20.8</Version>
     <PackageReleaseNotes>
-      To H.Core 0.19.6.
+      To H.Core 0.20.8.
       Added GoogleSearch.
     </PackageReleaseNotes>
     <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">true</GeneratePackageOnBuild>
@@ -50,13 +59,8 @@
   <PropertyGroup Label="Analyzers">
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <NoWarn>$(NoWarn)</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup Label="Analyzers">
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
 
 </Project>
